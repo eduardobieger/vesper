@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { UserService } from "./user.service.js";
+import type { UserResponseDTO } from "./user.dto.js";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -15,7 +16,16 @@ export class UserController {
       });
     }
 
-    return reply.send(user);
+    const response: UserResponseDTO = {
+      id: user.props.id,
+      firstName: user.props.firstName,
+      lastName: user.props.lastName,
+      email: user.props.email,
+      createdAt: user.props.createdAt,
+      updatedAt: user.props.updatedAt,
+    };
+
+    return reply.send(response);
   }
 
   async create(request: FastifyRequest, reply: FastifyReply) {
@@ -34,7 +44,18 @@ export class UserController {
         password,
       );
 
-      return reply.status(201).send(user);
+      if (user) {
+        const response: UserResponseDTO = {
+          id: user.props.id,
+          firstName: user.props.firstName,
+          lastName: user.props.lastName,
+          email: user.props.email,
+          createdAt: user.props.createdAt,
+          updatedAt: user.props.updatedAt,
+        };
+
+        return reply.status(201).send(response);
+      }
     } catch (err) {
       return reply.status(500).send({
         message: "Internal Server Error",
