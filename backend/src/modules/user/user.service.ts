@@ -1,4 +1,4 @@
-import { argon2 } from "node:crypto";
+import { argon2Sync } from "node:crypto";
 import { config } from "../../config/env.js";
 import type { User, UserProps } from "./user.entity.js";
 import type { IUserRepository } from "./user.repository.interface.js";
@@ -29,24 +29,19 @@ export class UserService {
       passes: 3,
     };
 
-    try {
-      argon2("argon2id", parameters, (err, derivedKey) => {
-        if (err) throw err;
+    const derivedKey = argon2Sync("argon2id", parameters);
 
-        const newUser: Omit<UserProps, "createdAt" | "updatedAt"> = {
-          id: crypto.randomUUID(),
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: derivedKey.toString(),
-        };
+    if (!derivedKey) return null;
 
-        return this.userRepository.save(newUser);
-      });
-    } catch (err) {
-      throw err;
-    }
+    const newUser: Omit<UserProps, "createdAt" | "updatedAt"> = {
+      id: crypto.randomUUID(),
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: derivedKey.toString("hex"),
+    };
 
-    return null;
+    const user = await this.userRepository.save(newUser);
+    return user;
   }
 }
