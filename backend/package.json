@@ -6,6 +6,7 @@
   "scripts": {
     "build": "pnpm tsc",
     "format": "pnpm prettier . --write",
+    "dev": "pnpm tsx watch ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
