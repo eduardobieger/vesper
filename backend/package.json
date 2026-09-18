@@ -31,7 +31,7 @@
     "@types/node": "^24.13.5",
     "@types/pg": "^8.23.1",
     "drizzle-kit": "1.0.0-rc.4",
-    "prettier": "^3.9.7",
+    "prettier": "^3.9.8",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }
