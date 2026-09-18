@@ -34,7 +34,7 @@ export class UserController {
         password,
       );
 
-      return reply.send(user);
+      return reply.status(201).send(user);
     } catch (err) {
       return reply.status(500).send({
         message: "Internal Server Error",
