@@ -7,10 +7,9 @@ export async function projectRoutes(
     controller: ProjectController;
   },
 ) {
-  fastify.get(
-    "/projects/:id",
-    options.controller.findById.bind(options.controller),
-  );
+  fastify.get("/:id", options.controller.findById.bind(options.controller));
 
-  fastify.post("/projects", options.controller.create.bind(options.controller));
+  fastify.get("/", options.controller.findByOwnerId.bind(options.controller));
+
+  fastify.post("/", options.controller.create.bind(options.controller));
 }

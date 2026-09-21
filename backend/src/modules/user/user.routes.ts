@@ -7,9 +7,6 @@ export async function userRoutes(
     controller: UserController;
   },
 ) {
-  fastify.get(
-    "/users/:id",
-    options.controller.findById.bind(options.controller),
-  );
-  fastify.post("/users", options.controller.create.bind(options.controller));
+  fastify.get("/:id", options.controller.findById.bind(options.controller));
+  fastify.post("/", options.controller.create.bind(options.controller));
 }

@@ -24,10 +24,12 @@ const projectService = new ProjectService(projectRepository);
 const projectController = new ProjectController(projectService);
 
 await fastify.register(userRoutes, {
+  prefix: "/users",
   controller: userController,
 });
 
 await fastify.register(projectRoutes, {
+  prefix: "/projects",
   controller: projectController,
 });
 
