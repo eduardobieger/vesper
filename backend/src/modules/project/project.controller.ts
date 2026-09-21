@@ -27,6 +27,40 @@ export class ProjectController {
     return reply.send(response);
   }
 
+  async findByOwnerId(request: FastifyRequest, reply: FastifyReply) {
+    const { ownerId } = request.query as { ownerId: string };
+
+    if (!ownerId) {
+      return reply.status(400).send({
+        message: "ownerId is required",
+      });
+    }
+
+    const projects = await this.projectService.findByOwnerId(ownerId);
+
+    if (!projects) {
+      return reply.status(404).send({
+        message: "Projects not found",
+      });
+    }
+
+    const responseProjects = [];
+
+    for (const project of projects) {
+      const response: ProjectResponseDTO = {
+        id: project.props.id,
+        name: project.props.name,
+        ownerId: project.props.ownerId,
+        createdAt: project.props.createdAt,
+        updatedAt: project.props.updatedAt,
+      };
+
+      responseProjects.push(response);
+    }
+
+    return reply.send(responseProjects);
+  }
+
   async create(request: FastifyRequest, reply: FastifyReply) {
     const { name, ownerId } = request.body as {
       name: string;
