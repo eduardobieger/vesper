@@ -21,14 +21,41 @@ export const projects = pgTable("projects", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const relations = defineRelations({ users, projects }, (r) => ({
+export const tasks = pgTable("tasks", {
+  id: uuid("id").primaryKey(),
+  title: text("title").notNull(),
+  projectId: uuid("project_id")
+    .notNull()
+    .references(() => projects.id),
+  ownerId: uuid("owner_id")
+    .notNull()
+    .references(() => users.id),
+  status: text("status").notNull(),
+  priority: text("priority"),
+  deadline: timestamp("deadline"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const relations = defineRelations({ users, projects, tasks }, (r) => ({
   projects: {
     owner: r.one.users({
       from: r.projects.ownerId,
       to: r.users.id,
     }),
+    taks: r.many.tasks(),
   },
   users: {
     projects: r.many.projects(),
+  },
+  tasks: {
+    project: r.one.projects({
+      from: r.tasks.projectId,
+      to: r.projects.id,
+    }),
+    owner: r.one.users({
+      from: r.tasks.ownerId,
+      to: r.users.id,
+    }),
   },
 }));
