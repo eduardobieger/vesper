@@ -44,4 +44,29 @@ export class UserService {
     const user = await this.userRepository.save(newUser);
     return user;
   }
+
+  async checkPassword(userId: string, password: string): Promise<boolean> {
+    const parameters = {
+      message: password,
+      nonce: config.argon2Salt,
+      parallelism: 4,
+      tagLength: 64,
+      memory: 65536,
+      passes: 3,
+    };
+
+    const derivedKey = argon2Sync("argon2id", parameters);
+
+    if (!derivedKey) throw new Error("Error generating key");
+
+    const user = await this.findById(userId);
+
+    if (!user) return false;
+
+    if (user.props.password === derivedKey.toString("hex")) {
+      return true;
+    }
+
+    return false;
+  }
 }

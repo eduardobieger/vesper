@@ -12,6 +12,10 @@ import { TaskRepository } from "./modules/task/task.repository.js";
 import { TaskService } from "./modules/task/task.service.js";
 import { TaskController } from "./modules/task/task.controller.js";
 import { taskRoutes } from "./modules/task/task.routes.js";
+import { SessionRepository } from "./modules/auth/session.repository.js";
+import { AuthService } from "./modules/auth/auth.service.js";
+import { AuthController } from "./modules/auth/auth.controller.js";
+import { authRoutes } from "./modules/auth/auth.routes.js";
 
 const PORT = 3000;
 
@@ -22,6 +26,10 @@ const fastify = Fastify({
 const userRepository = new UserRepository(db);
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
+
+const sessionRepository = new SessionRepository(db);
+const authService = new AuthService(userService, sessionRepository);
+const authController = new AuthController(authService);
 
 const projectRepository = new ProjectRepository(db);
 const projectService = new ProjectService(projectRepository);
@@ -34,6 +42,11 @@ const taskController = new TaskController(taskService);
 await fastify.register(userRoutes, {
   prefix: "/users",
   controller: userController,
+});
+
+await fastify.register(authRoutes, {
+  prefix: "/auth",
+  controller: authController,
 });
 
 await fastify.register(projectRoutes, {
