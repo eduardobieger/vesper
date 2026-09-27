@@ -37,25 +37,44 @@ export const tasks = pgTable("tasks", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-export const relations = defineRelations({ users, projects, tasks }, (r) => ({
-  projects: {
-    owner: r.one.users({
-      from: r.projects.ownerId,
-      to: r.users.id,
-    }),
-    taks: r.many.tasks(),
-  },
-  users: {
-    projects: r.many.projects(),
-  },
-  tasks: {
-    project: r.one.projects({
-      from: r.tasks.projectId,
-      to: r.projects.id,
-    }),
-    owner: r.one.users({
-      from: r.tasks.ownerId,
-      to: r.users.id,
-    }),
-  },
-}));
+export const sessions = pgTable("sessions", {
+  id: text("id").primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  expiresAt: timestamp("expires_at").notNull(),
+});
+
+export const relations = defineRelations(
+  { users, projects, tasks, sessions },
+  (r) => ({
+    projects: {
+      owner: r.one.users({
+        from: r.projects.ownerId,
+        to: r.users.id,
+      }),
+      taks: r.many.tasks(),
+    },
+    users: {
+      projects: r.many.projects(),
+      sessions: r.many.sessions(),
+    },
+    tasks: {
+      project: r.one.projects({
+        from: r.tasks.projectId,
+        to: r.projects.id,
+      }),
+      owner: r.one.users({
+        from: r.tasks.ownerId,
+        to: r.users.id,
+      }),
+    },
+    sessions: {
+      user: r.one.users({
+        from: r.sessions.userId,
+        to: r.users.id,
+      }),
+    },
+  }),
+);
