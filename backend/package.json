@@ -7,7 +7,8 @@
     "build": "pnpm tsc",
     "format": "pnpm prettier . --write",
     "dev": "pnpm tsx watch ./src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +35,7 @@
     "drizzle-kit": "1.0.0-rc.4",
     "prettier": "^3.9.9",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
   }
 }
