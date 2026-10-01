@@ -13,6 +13,9 @@ export class ProjectService {
   }
 
   async create(name: string, ownerId: string): Promise<Project | null> {
+    if (name === "" || ownerId === "")
+      throw new Error("name or ownerId is empty");
+
     const newProject: Omit<ProjectProps, "createdAt" | "updatedAt"> = {
       id: crypto.randomUUID(),
       name: name,
