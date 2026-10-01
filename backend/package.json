@@ -19,7 +19,7 @@
       "onFail": "download"
     }
   },
-  "packageManager": "pnpm@12.5.1",
+  "packageManager": "pnpm@12.8.1",
   "type": "module",
   "dependencies": {
     "@fastify/postgres": "^6.1.0",
