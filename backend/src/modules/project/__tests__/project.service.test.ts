@@ -41,4 +41,14 @@ describe("Projects", () => {
     expect(project?.props.name).toBe(name);
     expect(project?.props.ownerId).toBe(ownerId);
   });
+
+  it("should throw error when name or ownerId is empty", async () => {
+    const svc = new ProjectService(mockProjectRepo);
+
+    const ownerId = crypto.randomUUID();
+
+    await expect(svc.create("", ownerId)).rejects.toThrow(
+      "name or ownerId is empty",
+    );
+  });
 });
