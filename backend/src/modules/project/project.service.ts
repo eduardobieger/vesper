@@ -5,10 +5,14 @@ export class ProjectService {
   constructor(private readonly projectRepository: IProjectRepository) {}
 
   async findById(id: string): Promise<Project | null> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.projectRepository.findById(id);
   }
 
   async findByOwnerId(id: string): Promise<Project[] | null> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.projectRepository.findByOwnerId(id);
   }
 
