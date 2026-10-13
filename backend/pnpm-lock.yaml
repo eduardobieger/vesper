@@ -209,8 +209,8 @@ importers:
   .:
     dependencies:
       '@fastify/postgres':
-        specifier: ^6.1.0
-        version: 6.1.0(pg@8.23.1)
+        specifier: ^6.1.1
+        version: 6.1.1(pg@8.23.1)
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -578,8 +578,8 @@ packages:
   '@fastify/merge-json-schemas@0.2.1':
     resolution: {integrity: sha512-OA3KGBCy6KtIvLf8DINC5880o5iBlDX4SxzLQS8HorJAbqluzLRn80UXU0bxZn7UOFhFgpRJDasfwn9nG4FG4A==}
 
-  '@fastify/postgres@6.1.0':
-    resolution: {integrity: sha512-TN/pd+VXwotrpbxcBGERJ4JrwwqPCE4T63NmR2+Pue5McMeiVITMAmhExLhLLfEAGJ83M/AhiQrbh3/lrd+NTg==}
+  '@fastify/postgres@6.1.1':
+    resolution: {integrity: sha512-Fac5pDx7TGY5EIg/7BElBy6Uxu2gW3CpteOLPmwk2rTrEWByKjx+1oUe3+TfOhtRE/Za+k1bFub0U3f2/pTt5Q==}
     peerDependencies:
       pg: '>=6.0.0'
 
@@ -1682,7 +1682,7 @@ snapshots:
     dependencies:
       dequal: 2.0.3
 
-  '@fastify/postgres@6.1.0(pg@8.23.1)':
+  '@fastify/postgres@6.1.1(pg@8.23.1)':
     dependencies:
       fastify-plugin: 6.0.0
       pg: 8.23.1
