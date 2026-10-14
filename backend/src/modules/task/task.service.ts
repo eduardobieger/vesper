@@ -5,10 +5,14 @@ export class TaskService {
   constructor(private readonly taskRepository: ITaskRepository) {}
 
   async findById(id: string): Promise<Task | null> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.taskRepository.findById(id);
   }
 
   async findByProjectId(id: string): Promise<Task[] | null> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.taskRepository.findByProjectId(id);
   }
 
@@ -20,6 +24,9 @@ export class TaskService {
     priority?: string,
     deadline?: Date,
   ): Promise<Task | null> {
+    if (title === "" || projectId === "" || ownerId === "" || status === "")
+      throw new Error("invalid request body");
+
     const newTask: Omit<TaskProps, "createdAt" | "updatedAt"> = {
       id: crypto.randomUUID(),
       title: title,
@@ -35,6 +42,8 @@ export class TaskService {
   }
 
   async delete(id: string): Promise<void> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.taskRepository.delete(id);
   }
 }
