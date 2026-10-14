@@ -31,6 +31,8 @@ export class ProjectService {
   }
 
   async delete(id: string): Promise<void> {
+    if (id === "") throw new Error("id is empty");
+
     return await this.projectRepository.delete(id);
   }
 }
