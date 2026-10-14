@@ -129,6 +129,8 @@ describe("Projects", () => {
         id: expect.any(String),
         name: name,
         ownerId: ownerId,
+        createdAt: expect.any(Date),
+        updatedAt: expect.any(Date),
       }),
     });
   });
@@ -145,5 +147,20 @@ describe("Projects", () => {
     );
 
     expect(mockProjectRepo.save).not.toHaveBeenCalled();
+  });
+
+  it("should delete without return", async () => {
+    const svc = new ProjectService(mockProjectRepo);
+    const projectId = crypto.randomUUID();
+
+    await svc.delete(projectId);
+
+    expect(mockProjectRepo.delete).toHaveBeenCalledWith(projectId);
+  });
+
+  it("should throw when id is empty", async () => {
+    const svc = new ProjectService(mockProjectRepo);
+
+    await expect(svc.delete("")).rejects.toThrow("id is empty");
   });
 });
