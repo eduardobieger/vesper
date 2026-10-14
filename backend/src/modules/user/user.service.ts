@@ -7,6 +7,8 @@ export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
   async findById(id: string): Promise<User | null> {
+    if (id === "") throw new Error("id is empty");
+
     return this.userRepository.findById(id);
   }
 
