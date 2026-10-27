@@ -47,7 +47,7 @@ describe("Users", () => {
     });
   });
 
-  it("should return null when user is not found", async () => {
+  it("should return null when user is not found by id", async () => {
     const svc = new UserService(mockUserRepo);
     mockUserRepo.findById.mockResolvedValue(null);
 
@@ -68,7 +68,7 @@ describe("Users", () => {
     const userId = crypto.randomUUID();
     const userEmail = "test@mail.com";
 
-    mockUserRepo.findById.mockResolvedValue({
+    mockUserRepo.findByEmail.mockResolvedValue({
       props: {
         id: userId,
         firstName: "John",
@@ -95,5 +95,25 @@ describe("Users", () => {
         updatedAt: expect.any(Date),
       }),
     });
+  });
+
+  it("should return null when user is not found by email", async () => {
+    const svc = new UserService(mockUserRepo);
+    mockUserRepo.findByEmail.mockResolvedValue(null);
+
+    const user = await svc.findByEmail("non-existent-email");
+
+    expect(user).toBeNull();
+    expect(mockUserRepo.findByEmail).toHaveBeenCalledWith("non-existent-email");
+  });
+
+  it("should throw when user email is empty", async () => {
+    const svc = new UserService(mockUserRepo);
+
+    await expect(svc.findByEmail("")).rejects.toThrow("email is empty");
+  });
+
+  it("should create and return a new user", async () => {
+    const svc = new UserService(mockUserRepo);
   });
 });
