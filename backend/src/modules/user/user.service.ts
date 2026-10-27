@@ -13,6 +13,8 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User | null> {
+    if (email === "") throw new Error("email is empty");
+
     return this.userRepository.findByEmail(email);
   }
 
