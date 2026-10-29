@@ -24,6 +24,9 @@ export class UserService {
     email: string,
     password: string,
   ): Promise<User | null> {
+    if (firstName === "" || lastName === "" || email === "" || password === "")
+      throw new Error("invalid request body");
+
     const parameters = {
       message: password,
       nonce: config.argon2Salt,
