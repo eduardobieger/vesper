@@ -1,4 +1,5 @@
 import Fastify from "fastify";
+import { fastifyCors } from "@fastify/cors";
 import { UserRepository } from "./modules/user/user.repository.js";
 import { db } from "./config/db.js";
 import { UserService } from "./modules/user/user.service.js";
@@ -21,6 +22,12 @@ const PORT = 3000;
 
 const fastify = Fastify({
   logger: true,
+});
+
+await fastify.register(fastifyCors, {
+  origin: "http://localhost:5173",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 });
 
 const userRepository = new UserRepository(db);
