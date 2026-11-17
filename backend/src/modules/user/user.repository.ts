@@ -20,6 +20,7 @@ export class UserRepository implements IUserRepository {
       lastName: result.lastName,
       email: result.email,
       password: result.passwordHash,
+      passwordSalt: result.passwordSalt,
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
     });
@@ -38,6 +39,7 @@ export class UserRepository implements IUserRepository {
       lastName: result.lastName,
       email: result.email,
       password: result.passwordHash,
+      passwordSalt: result.passwordSalt,
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
     });
@@ -55,6 +57,7 @@ export class UserRepository implements IUserRepository {
           lastName: user.lastName,
           email: user.email,
           passwordHash: user.password,
+          passwordSalt: user.passwordSalt,
         })
         .returning()
     )[0];
@@ -67,6 +70,7 @@ export class UserRepository implements IUserRepository {
       lastName: result.lastName,
       email: result.email,
       password: result.passwordHash,
+      passwordSalt: result.passwordSalt,
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
     });

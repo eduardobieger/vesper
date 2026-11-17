@@ -4,6 +4,7 @@ export interface UserProps {
   lastName: string;
   email: string;
   password: string;
+  passwordSalt: string;
   createdAt: Date;
   updatedAt: Date;
 }
